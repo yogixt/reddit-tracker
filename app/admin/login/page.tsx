@@ -42,8 +42,8 @@ export default function AdminLogin() {
     <main className="flex flex-1 items-center justify-center px-5 py-10">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex items-center gap-2.5">
-          <Image src="/logo.png" alt="" width={26} height={26} priority />
-          <span className="text-[13px] font-semibold">Reddit Tracker</span>
+          <Image src="/logo.png" alt="" width={24} height={24} priority />
+          <span className="text-[13px] font-semibold">Tracker</span>
         </div>
 
         <p className="kicker mb-2">Admin</p>

@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Reddit Engagement Tracker",
-  description: "Track daily Reddit engagement activities",
+  title: "Tracker",
+  description: "Daily engagement log for the team",
 };
 
 export const viewport: Viewport = {

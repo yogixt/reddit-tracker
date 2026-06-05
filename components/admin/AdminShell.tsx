@@ -72,9 +72,9 @@ export default function AdminShell({
   const sidebar = (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2.5 px-4 pb-4 pt-5">
-        <Image src="/logo.png" alt="" width={26} height={26} />
+        <Image src="/logo.png" alt="" width={24} height={24} />
         <div className="leading-tight">
-          <p className="text-[13px] font-semibold">Reddit Tracker</p>
+          <p className="text-[13px] font-semibold">Tracker</p>
           <p className="text-[10px] text-faint">internal</p>
         </div>
       </div>

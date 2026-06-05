@@ -8,8 +8,8 @@ export default function Landing() {
   return (
     <main className="flex flex-1 flex-col px-5">
       <header className="mx-auto flex w-full max-w-2xl items-center gap-2.5 py-6">
-        <Image src="/logo.png" alt="" width={26} height={26} priority />
-        <span className="text-[13px] font-semibold">Reddit Tracker</span>
+        <Image src="/logo.png" alt="" width={24} height={24} priority />
+        <span className="text-[13px] font-semibold">Tracker</span>
         <span className="kicker ml-auto">internal tool</span>
       </header>
 

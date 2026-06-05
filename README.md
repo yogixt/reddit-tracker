@@ -1,6 +1,6 @@
-# Reddit Engagement Tracker
+# Tracker
 
-Mobile-first internal dashboard to track daily Reddit engagement activities of employees. Employees log their activity in under 30 seconds; admins get KPIs, a team heatmap, leaderboards, and analytics.
+Mobile-first internal dashboard to track daily Reddit engagement activities of employees. Branded simply as "Tracker" — it is an internal tool, not a Reddit product. Employees log their activity in under 30 seconds; admins get KPIs, a team heatmap, leaderboards, and analytics.
 
 ## Tech Stack
 
