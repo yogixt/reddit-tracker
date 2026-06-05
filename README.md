@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Reddit Engagement Tracker
 
-## Getting Started
+Mobile-first internal dashboard to track daily Reddit engagement activities of employees. Employees log their activity in under 30 seconds; admins get KPIs, a team heatmap, leaderboards, and analytics.
 
-First, run the development server:
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 16 + TypeScript |
+| Styling | Tailwind CSS v4 |
+| Animations | Framer Motion |
+| Charts | Recharts |
+| Icons | Lucide React |
+| Database | Turso (libSQL) — free tier |
+| Hosting | Vercel — free tier |
+
+## Local Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Without `.env.local` the app falls back to a local SQLite file (`local.db`). With `.env.local` present it talks to the live Turso database. Tables are created and a default admin (`Admin` / `admin123`) is seeded automatically on first request.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Description |
+|----------|-------------|
+| `TURSO_DATABASE_URL` | `libsql://reddit-tracker-yogixt.aws-ap-south-1.turso.io` |
+| `TURSO_AUTH_TOKEN` | Create with `turso db tokens create reddit-tracker` |
+| `ADMIN_NAME` / `ADMIN_PASSWORD` | Optional — seeded on first request only (defaults `Admin` / `admin123`) |
 
-## Learn More
+## Deploy
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+vercel --prod
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Set the env vars above in the Vercel project first (`vercel env add`). Schema is auto-created on first request; no migration step needed.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Roles
 
-## Deploy on Vercel
+- **Employee** — logs in with name + Reddit username (name must be in the roster), sees streak/likes/comments/reports, submits one report per day (IST).
+- **Admin** — logs in with name + password; dashboard (KPIs, heatmap, today's table), leaderboard, analytics (30-day daily chart, weekly aggregates), employee management.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## API Routes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/employees` | GET / POST | List / add employees |
+| `/api/submissions` | GET | Today's submissions; `?all=true` for all; `?name=X` for personal stats |
+| `/api/submissions` | POST | Submit daily activity (one per day) |
+| `/api/analytics` | GET | KPIs, heatmap, leaderboard, daily + weekly charts |
+| `/api/auth/employee` | POST | Validate employee name |
+| `/api/auth/admin` | POST | Authenticate admin |
