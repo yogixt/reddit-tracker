@@ -1,12 +1,12 @@
 const COLORS = [
-  "#8B5CF6",
-  "#06B6D4",
-  "#F59E0B",
-  "#10B981",
-  "#EC4899",
-  "#3B82F6",
-  "#EF4444",
-  "#A78BFA",
+  "#ff4500",
+  "#e8590c",
+  "#f59f00",
+  "#74b816",
+  "#22b8cf",
+  "#4c8bf5",
+  "#9775fa",
+  "#f06595",
 ];
 
 function hashName(name: string): number {
@@ -33,13 +33,14 @@ export default function Avatar({
     .toUpperCase();
   return (
     <div
-      className="flex shrink-0 items-center justify-center rounded-full font-medium"
+      className="flex shrink-0 select-none items-center justify-center rounded-full border font-medium"
       style={{
         width: size,
         height: size,
-        background: `${color}26`,
+        background: `${color}14`,
+        borderColor: `${color}33`,
         color,
-        fontSize: size * 0.38,
+        fontSize: size * 0.36,
       }}
     >
       {initials}

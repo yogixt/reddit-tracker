@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Trophy,
@@ -12,7 +12,6 @@ import {
   LogOut,
   Menu,
   X,
-  Bell,
   Loader2,
 } from "lucide-react";
 import Avatar from "@/components/Avatar";
@@ -58,32 +57,30 @@ export default function AdminShell({
   if (!checked || !session) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <Loader2 size={28} className="animate-spin text-primary" />
+        <Loader2 size={24} className="animate-spin text-faint" />
       </div>
     );
   }
 
   const today = new Date().toLocaleDateString("en-IN", {
     timeZone: "Asia/Kolkata",
-    weekday: "short",
+    weekday: "long",
     day: "numeric",
-    month: "short",
-    year: "numeric",
+    month: "long",
   });
 
   const sidebar = (
     <div className="flex h-full flex-col">
-      <div className="flex items-center gap-2.5 px-5 py-5">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 p-1">
-          <Image src="/logo.png" alt="Reddit Tracker" width={30} height={30} />
-        </div>
-        <div>
-          <p className="text-sm font-semibold leading-tight">Reddit Tracker</p>
-          <p className="text-[10px] text-muted">Admin Panel</p>
+      <div className="flex items-center gap-2.5 px-4 pb-4 pt-5">
+        <Image src="/logo.png" alt="" width={26} height={26} />
+        <div className="leading-tight">
+          <p className="text-[13px] font-semibold">Reddit Tracker</p>
+          <p className="text-[10px] text-faint">internal</p>
         </div>
       </div>
 
-      <nav className="flex-1 space-y-1 px-3 py-2">
+      <p className="kicker px-4 pb-2 pt-3">Menu</p>
+      <nav className="flex-1 space-y-0.5 px-2">
         {NAV.map((item) => {
           const active = pathname.startsWith(item.href);
           return (
@@ -91,15 +88,19 @@ export default function AdminShell({
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${
+              className={`relative flex items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] transition-colors ${
                 active
-                  ? "bg-primary/15 text-white glow-primary"
-                  : "text-muted hover:bg-white/5 hover:text-white"
+                  ? "bg-surface-2 text-white"
+                  : "text-muted hover:bg-surface-2/60 hover:text-white"
               }`}
             >
+              {active ? (
+                <span className="absolute left-0 top-1/2 h-4 w-0.5 -translate-y-1/2 rounded-full bg-accent" />
+              ) : null}
               <item.icon
-                size={17}
-                className={active ? "text-primary" : undefined}
+                size={16}
+                strokeWidth={1.75}
+                className={active ? "text-accent" : undefined}
               />
               {item.label}
             </Link>
@@ -107,19 +108,19 @@ export default function AdminShell({
         })}
       </nav>
 
-      <div className="border-t border-white/5 p-4">
-        <div className="flex items-center gap-3">
-          <Avatar name={session.name} size={34} />
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium">{session.name}</p>
-            <p className="text-[10px] text-muted">Administrator</p>
+      <div className="border-t border-edge p-3">
+        <div className="flex items-center gap-2.5">
+          <Avatar name={session.name} size={30} />
+          <div className="min-w-0 flex-1 leading-tight">
+            <p className="truncate text-[13px] font-medium">{session.name}</p>
+            <p className="text-[10px] text-faint">admin</p>
           </div>
           <button
             onClick={handleLogout}
             title="Logout"
-            className="text-muted transition hover:text-red-400"
+            className="rounded-md p-1.5 text-faint transition-colors hover:bg-surface-2 hover:text-bad"
           >
-            <LogOut size={16} />
+            <LogOut size={15} />
           </button>
         </div>
       </div>
@@ -129,7 +130,7 @@ export default function AdminShell({
   return (
     <div className="flex min-h-screen">
       {/* Desktop sidebar */}
-      <aside className="glass sticky top-0 hidden h-screen w-60 shrink-0 border-r border-white/5 lg:block">
+      <aside className="sticky top-0 hidden h-screen w-56 shrink-0 border-r border-edge bg-surface lg:block">
         {sidebar}
       </aside>
 
@@ -137,15 +138,15 @@ export default function AdminShell({
       {open ? (
         <div className="fixed inset-0 z-40 lg:hidden">
           <div
-            className="absolute inset-0 bg-black/60"
+            className="absolute inset-0 bg-black/70"
             onClick={() => setOpen(false)}
           />
-          <aside className="glass absolute left-0 top-0 h-full w-64 border-r border-white/5">
+          <aside className="absolute left-0 top-0 h-full w-60 border-r border-edge bg-surface">
             <button
               onClick={() => setOpen(false)}
-              className="absolute right-3 top-4 text-muted hover:text-white"
+              className="absolute right-3 top-4 text-faint hover:text-white"
             >
-              <X size={18} />
+              <X size={17} />
             </button>
             {sidebar}
           </aside>
@@ -154,20 +155,19 @@ export default function AdminShell({
 
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Top bar */}
-        <header className="glass sticky top-0 z-30 flex items-center gap-3 border-b border-white/5 px-4 py-3 sm:px-6">
+        <header className="sticky top-0 z-30 flex h-12 items-center gap-3 border-b border-edge bg-bg/90 px-4 backdrop-blur-sm sm:px-6">
           <button
             onClick={() => setOpen(true)}
             className="text-muted hover:text-white lg:hidden"
           >
-            <Menu size={20} />
+            <Menu size={18} />
           </button>
-          <p className="hidden text-sm text-muted sm:block">{today}</p>
+          <p className="text-xs text-faint">{today}</p>
           <div className="flex-1" />
-          <button className="relative text-muted transition hover:text-white">
-            <Bell size={18} />
-            <span className="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full bg-primary" />
-          </button>
-          <Avatar name={session.name} size={30} />
+          <span className="flex items-center gap-1.5 text-[11px] text-muted">
+            <span className="dot bg-ok" />
+            live
+          </span>
         </header>
 
         <main className="flex-1 px-4 py-6 sm:px-6">{children}</main>

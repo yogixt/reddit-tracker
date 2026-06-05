@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 
 interface StatCardProps {
@@ -9,39 +6,25 @@ interface StatCardProps {
   icon: LucideIcon;
   accent?: string;
   sub?: string;
-  delay?: number;
 }
 
 export default function StatCard({
   label,
   value,
   icon: Icon,
-  accent = "#8B5CF6",
+  accent = "#8e8e96",
   sub,
-  delay = 0,
 }: StatCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, delay }}
-      className="glass gradient-border rounded-2xl p-4 sm:p-5"
-    >
-      <div className="flex items-center gap-3">
-        <div
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
-          style={{ background: `${accent}1f`, color: accent }}
-        >
-          <Icon size={20} />
-        </div>
-        <div className="min-w-0">
-          <p className="text-xs text-muted truncate">{label}</p>
-          <p className="text-xl sm:text-2xl font-semibold leading-tight">
-            {value}
-          </p>
-          {sub ? <p className="text-[11px] text-muted">{sub}</p> : null}
-        </div>
+    <div className="card p-4">
+      <div className="flex items-center justify-between gap-2">
+        <span className="kicker truncate">{label}</span>
+        <Icon size={15} style={{ color: accent }} strokeWidth={1.75} />
       </div>
-    </motion.div>
+      <p className="mt-2.5 text-[26px] font-semibold leading-none tabular-nums tracking-tight">
+        {value}
+      </p>
+      {sub ? <p className="mt-1.5 text-xs text-faint">{sub}</p> : null}
+    </div>
   );
 }

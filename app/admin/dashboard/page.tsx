@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import {
   Users,
   FileCheck,
@@ -30,115 +29,102 @@ export default function AdminDashboard() {
     <AdminShell>
       {!data ? (
         <div className="flex h-64 items-center justify-center">
-          <Loader2 size={28} className="animate-spin text-primary" />
+          <Loader2 size={24} className="animate-spin text-faint" />
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="mx-auto max-w-5xl space-y-5">
           <div>
-            <h1 className="text-xl font-bold">Dashboard</h1>
-            <p className="text-xs text-muted">
-              Team Reddit engagement at a glance
+            <h1 className="text-lg font-semibold tracking-tight">Dashboard</h1>
+            <p className="text-xs text-faint">
+              Team engagement at a glance, today in IST.
             </p>
           </div>
 
           {/* KPI cards */}
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
             <StatCard
-              label="Total Employees"
+              label="Employees"
               value={data.kpis.totalEmployees}
               icon={Users}
-              accent="#8B5CF6"
-              delay={0.02}
             />
             <StatCard
-              label="Reports Today"
+              label="Reports today"
               value={data.kpis.submittedToday}
               sub={`${data.kpis.pendingToday} pending`}
               icon={FileCheck}
-              accent="#10B981"
-              delay={0.06}
+              accent="#4ade80"
             />
             <StatCard
               label="Participation"
               value={`${data.kpis.participationRate}%`}
               icon={Percent}
-              accent="#06B6D4"
-              delay={0.1}
+              accent="#ff4500"
             />
             <StatCard
-              label="Likes Today"
+              label="Likes today"
               value={data.kpis.likesToday}
               icon={Heart}
-              accent="#EC4899"
-              delay={0.14}
+              accent="#f06595"
             />
             <StatCard
-              label="Comments Today"
+              label="Comments"
               value={data.kpis.commentsToday}
               icon={MessageCircle}
-              accent="#F59E0B"
-              delay={0.18}
+              accent="#22b8cf"
             />
             <StatCard
               label="Communities"
               value={data.kpis.activeCommunities}
               icon={Globe}
-              accent="#A78BFA"
-              delay={0.22}
+              accent="#9775fa"
             />
           </div>
 
           {/* Heatmap */}
-          <motion.section
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="glass gradient-border rounded-2xl p-5"
-          >
-            <h2 className="mb-1 font-semibold">Team Activity</h2>
-            <p className="mb-4 text-xs text-muted">
-              Green submitted today, red missing
-            </p>
+          <section className="card p-5">
+            <div className="flex items-baseline justify-between">
+              <h2 className="text-[15px] font-medium">Who&apos;s in today</h2>
+              <span className="text-[11px] text-faint">
+                {data.kpis.submittedToday}/{data.kpis.totalEmployees} submitted
+              </span>
+            </div>
             {data.heatmap.length === 0 ? (
-              <p className="text-sm text-muted">No employees added yet.</p>
+              <p className="mt-4 text-[13px] text-muted">
+                No one on the roster yet. Employees appear here after their
+                first sign-in.
+              </p>
             ) : (
-              <div className="flex flex-wrap gap-2">
+              <div className="mt-4 flex flex-wrap gap-1.5">
                 {data.heatmap.map((e) => (
                   <span
                     key={e.name}
-                    className={`rounded-full border px-3 py-1.5 text-xs ${
-                      e.submittedToday
-                        ? "border-green-500/40 bg-green-500/10 text-green-300 glow-green"
-                        : "border-red-500/40 bg-red-500/10 text-red-300 glow-red"
-                    }`}
+                    className="flex items-center gap-1.5 rounded-md border border-edge bg-surface-2 px-2.5 py-1 text-xs"
                   >
+                    <span
+                      className={`dot ${e.submittedToday ? "bg-ok" : "bg-bad"}`}
+                    />
                     {e.name}
                   </span>
                 ))}
               </div>
             )}
-          </motion.section>
+          </section>
 
           {/* Today's activity table */}
-          <motion.section
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="glass gradient-border overflow-hidden rounded-2xl"
-          >
-            <div className="p-5 pb-3">
-              <h2 className="font-semibold">Today&apos;s Activity</h2>
+          <section className="card overflow-hidden">
+            <div className="px-5 pb-1 pt-4">
+              <h2 className="text-[15px] font-medium">Today&apos;s reports</h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[640px] text-sm">
+              <table className="tbl min-w-[640px]">
                 <thead>
-                  <tr className="border-y border-white/5 text-left text-xs text-muted">
-                    <th className="px-5 py-2.5 font-medium">Employee</th>
-                    <th className="px-3 py-2.5 font-medium">Time</th>
-                    <th className="px-3 py-2.5 font-medium">Likes</th>
-                    <th className="px-3 py-2.5 font-medium">Comments</th>
-                    <th className="px-3 py-2.5 font-medium">Communities</th>
-                    <th className="px-5 py-2.5 font-medium">Status</th>
+                  <tr>
+                    <th className="pl-5">Employee</th>
+                    <th>Time</th>
+                    <th>Likes</th>
+                    <th>Comments</th>
+                    <th>Communities</th>
+                    <th className="pr-5">Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -148,41 +134,41 @@ export default function AdminDashboard() {
                         String(s.name).toLowerCase() === emp.name.toLowerCase()
                     );
                     return (
-                      <tr
-                        key={emp.name}
-                        className="border-b border-white/5 last:border-0"
-                      >
-                        <td className="px-5 py-3">
+                      <tr key={emp.name}>
+                        <td className="pl-5">
                           <div className="flex items-center gap-2.5">
-                            <Avatar name={emp.name} size={28} />
-                            <div>
-                              <p className="leading-tight">{emp.name}</p>
-                              <p className="text-[10px] text-secondary">
+                            <Avatar name={emp.name} size={26} />
+                            <div className="leading-tight">
+                              <p>{emp.name}</p>
+                              <p className="text-[10px] text-faint">
                                 {emp.reddit_username}
                               </p>
                             </div>
                           </div>
                         </td>
-                        <td className="px-3 py-3 text-muted">
-                          {sub ? `${sub.time_spent} min` : "-"}
+                        <td className="tabular-nums text-muted">
+                          {sub ? `${sub.time_spent}m` : "—"}
                         </td>
-                        <td className="px-3 py-3">{sub ? sub.likes : "-"}</td>
-                        <td className="px-3 py-3">
-                          {sub ? sub.comments : "-"}
+                        <td className="tabular-nums">
+                          {sub ? sub.likes : "—"}
                         </td>
-                        <td className="max-w-[200px] truncate px-3 py-3 text-muted">
-                          {sub ? sub.communities : "-"}
+                        <td className="tabular-nums">
+                          {sub ? sub.comments : "—"}
                         </td>
-                        <td className="px-5 py-3">
-                          {sub ? (
-                            <span className="rounded-full border border-green-500/40 bg-green-500/10 px-2.5 py-0.5 text-[11px] text-green-300">
-                              Submitted
-                            </span>
-                          ) : (
-                            <span className="rounded-full border border-red-500/40 bg-red-500/10 px-2.5 py-0.5 text-[11px] text-red-300">
-                              Missing
-                            </span>
-                          )}
+                        <td className="max-w-[200px] truncate text-muted">
+                          {sub ? sub.communities : "—"}
+                        </td>
+                        <td className="pr-5">
+                          <span
+                            className={`inline-flex items-center gap-1.5 text-xs ${
+                              sub ? "text-ok" : "text-bad"
+                            }`}
+                          >
+                            <span
+                              className={`dot ${sub ? "bg-ok" : "bg-bad"}`}
+                            />
+                            {sub ? "Submitted" : "Missing"}
+                          </span>
                         </td>
                       </tr>
                     );
@@ -191,16 +177,16 @@ export default function AdminDashboard() {
                     <tr>
                       <td
                         colSpan={6}
-                        className="px-5 py-8 text-center text-sm text-muted"
+                        className="px-5 py-8 text-center text-[13px] text-muted"
                       >
-                        No employees yet. Add them in the Employees tab.
+                        Nothing to show yet.
                       </td>
                     </tr>
                   ) : null}
                 </tbody>
               </table>
             </div>
-          </motion.section>
+          </section>
         </div>
       )}
     </AdminShell>

@@ -2,84 +2,74 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { Users, ShieldCheck, ArrowRight } from "lucide-react";
 
 export default function Landing() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center px-4 py-10">
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="flex flex-col items-center text-center"
-      >
-        <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5 p-2 glow-primary">
-          <Image src="/logo.png" alt="Reddit Engagement Tracker" width={56} height={56} priority />
-        </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-          Reddit Engagement{" "}
-          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Tracker
-          </span>
-        </h1>
-        <p className="mt-3 max-w-md text-sm text-muted">
-          Log your daily Reddit activity in under 30 seconds. Track streaks,
-          likes, comments, and team participation.
-        </p>
-      </motion.div>
+    <main className="flex flex-1 flex-col px-5">
+      <header className="mx-auto flex w-full max-w-2xl items-center gap-2.5 py-6">
+        <Image src="/logo.png" alt="" width={26} height={26} priority />
+        <span className="text-[13px] font-semibold">Reddit Tracker</span>
+        <span className="kicker ml-auto">internal tool</span>
+      </header>
 
-      <div className="mt-10 grid w-full max-w-md gap-4">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-        >
+      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center pb-24">
+        <p className="kicker mb-3 text-accent">Daily engagement log</p>
+        <h1 className="max-w-md text-[28px] font-semibold leading-tight tracking-tight sm:text-[34px]">
+          One report a day keeps the graphs alive.
+        </h1>
+        <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted">
+          Log your Reddit activity in under thirty seconds. Streaks, likes,
+          comments and team participation, all in one place.
+        </p>
+
+        <div className="mt-10 grid gap-3 sm:grid-cols-2">
           <Link
             href="/employee/login"
-            className="glass gradient-border group flex items-center gap-4 rounded-2xl p-5 transition hover:glow-primary"
+            className="card group p-5 transition-colors hover:border-edge-strong"
           >
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/20 text-primary">
-              <Users size={22} />
+            <div className="flex items-center justify-between">
+              <Users size={18} strokeWidth={1.75} className="text-accent" />
+              <ArrowRight
+                size={15}
+                className="text-faint transition-transform group-hover:translate-x-0.5 group-hover:text-white"
+              />
             </div>
-            <div className="flex-1 text-left">
-              <p className="font-semibold">I&apos;m an Employee</p>
-              <p className="text-xs text-muted">
-                Submit your daily Reddit activity
-              </p>
-            </div>
-            <ArrowRight
-              size={18}
-              className="text-muted transition group-hover:translate-x-1 group-hover:text-primary"
-            />
+            <p className="mt-4 text-[15px] font-medium">I&apos;m an employee</p>
+            <p className="mt-1 text-xs leading-relaxed text-muted">
+              Submit today&apos;s activity. First time? Your account is created
+              when you sign in.
+            </p>
           </Link>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-        >
           <Link
             href="/admin/login"
-            className="glass gradient-border group flex items-center gap-4 rounded-2xl p-5 transition hover:glow-primary"
+            className="card group p-5 transition-colors hover:border-edge-strong"
           >
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-secondary/20 text-secondary">
-              <ShieldCheck size={22} />
+            <div className="flex items-center justify-between">
+              <ShieldCheck
+                size={18}
+                strokeWidth={1.75}
+                className="text-muted"
+              />
+              <ArrowRight
+                size={15}
+                className="text-faint transition-transform group-hover:translate-x-0.5 group-hover:text-white"
+              />
             </div>
-            <div className="flex-1 text-left">
-              <p className="font-semibold">Admin Login</p>
-              <p className="text-xs text-muted">
-                Team dashboard, analytics, and reports
-              </p>
-            </div>
-            <ArrowRight
-              size={18}
-              className="text-muted transition group-hover:translate-x-1 group-hover:text-secondary"
-            />
+            <p className="mt-4 text-[15px] font-medium">Admin</p>
+            <p className="mt-1 text-xs leading-relaxed text-muted">
+              Team dashboard, leaderboard, analytics and roster.
+            </p>
           </Link>
-        </motion.div>
+        </div>
       </div>
+
+      <footer className="mx-auto w-full max-w-2xl pb-6">
+        <p className="text-[11px] text-faint">
+          Reports close at midnight IST. Missed days break the streak.
+        </p>
+      </footer>
     </main>
   );
 }

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ShieldCheck, Loader2, ArrowLeft } from "lucide-react";
+import Image from "next/image";
+import { Loader2, ArrowLeft } from "lucide-react";
 import { setAdminSession } from "@/lib/session";
 
 export default function AdminLogin() {
@@ -39,70 +39,58 @@ export default function AdminLogin() {
   }
 
   return (
-    <main className="flex flex-1 items-center justify-center px-4 py-10">
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="glass gradient-border w-full max-w-sm rounded-2xl p-6 sm:p-8"
-      >
-        <div className="mb-6 flex flex-col items-center text-center">
-          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/20 text-secondary">
-            <ShieldCheck size={24} />
-          </div>
-          <h1 className="text-xl font-semibold">Admin Login</h1>
-          <p className="mt-1 text-xs text-muted">
-            Sign in to the team dashboard
-          </p>
+    <main className="flex flex-1 items-center justify-center px-5 py-10">
+      <div className="w-full max-w-sm">
+        <div className="mb-8 flex items-center gap-2.5">
+          <Image src="/logo.png" alt="" width={26} height={26} priority />
+          <span className="text-[13px] font-semibold">Reddit Tracker</span>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <p className="kicker mb-2">Admin</p>
+        <h1 className="text-xl font-semibold tracking-tight">Sign in</h1>
+        <p className="mt-1.5 text-[13px] text-muted">
+          Team dashboard and reports.
+        </p>
+
+        <form onSubmit={handleSubmit} className="mt-7 space-y-4">
           <div>
-            <label className="mb-1.5 block text-xs text-muted">Name</label>
+            <label className="kicker mb-1.5 block">Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Admin name"
               required
-              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-primary/20"
+              className="input"
             />
           </div>
           <div>
-            <label className="mb-1.5 block text-xs text-muted">Password</label>
+            <label className="kicker mb-1.5 block">Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
               required
-              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-primary/20"
+              className="input"
             />
           </div>
 
-          {error ? (
-            <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400">
-              {error}
-            </p>
-          ) : null}
+          {error ? <p className="alert-error">{error}</p> : null}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-medium transition hover:bg-primary/90 disabled:opacity-60 glow-primary"
-          >
-            {loading ? <Loader2 size={16} className="animate-spin" /> : null}
-            {loading ? "Signing in..." : "Sign In"}
+          <button type="submit" disabled={loading} className="btn btn-primary w-full">
+            {loading ? <Loader2 size={15} className="animate-spin" /> : null}
+            {loading ? "Signing in" : "Sign in"}
           </button>
         </form>
 
         <Link
           href="/"
-          className="mt-5 flex items-center justify-center gap-1.5 text-xs text-muted transition hover:text-white"
+          className="mt-6 inline-flex items-center gap-1.5 text-xs text-faint transition-colors hover:text-white"
         >
-          <ArrowLeft size={13} /> Back to home
+          <ArrowLeft size={12} /> Back to home
         </Link>
-      </motion.div>
+      </div>
     </main>
   );
 }

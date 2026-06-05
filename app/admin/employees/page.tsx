@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { UserPlus, Loader2 } from "lucide-react";
 import AdminShell from "@/components/admin/AdminShell";
 import Avatar from "@/components/Avatar";
@@ -41,7 +40,7 @@ export default function EmployeesPage() {
         setError(data.error ?? "Failed to add employee");
         return;
       }
-      setSuccess(`${name} added`);
+      setSuccess(`${name} added to the roster`);
       setName("");
       setRedditUsername("");
       await load();
@@ -54,127 +53,103 @@ export default function EmployeesPage() {
 
   return (
     <AdminShell>
-      <div className="space-y-6">
+      <div className="mx-auto max-w-5xl space-y-5">
         <div>
-          <h1 className="text-xl font-bold">Employees</h1>
-          <p className="text-xs text-muted">
-            Add team members and view the roster
+          <h1 className="text-lg font-semibold tracking-tight">Employees</h1>
+          <p className="text-xs text-faint">
+            The roster fills itself — employees are added on their first
+            sign-in. You can also add someone by hand.
           </p>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-[360px_1fr]">
+        <div className="grid items-start gap-4 lg:grid-cols-[320px_1fr]">
           {/* Add form */}
-          <motion.section
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05 }}
-            className="glass gradient-border h-fit rounded-2xl p-5"
-          >
-            <div className="mb-4 flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/20 text-primary">
-                <UserPlus size={18} />
-              </div>
-              <h2 className="font-semibold">Add Employee</h2>
-            </div>
-            <form onSubmit={handleAdd} className="space-y-3.5">
+          <section className="card p-5">
+            <h2 className="text-[15px] font-medium">Add manually</h2>
+            <form onSubmit={handleAdd} className="mt-4 space-y-3.5">
               <div>
-                <label className="mb-1.5 block text-xs text-muted">Name</label>
+                <label className="kicker mb-1.5 block">Name</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Full name"
                   required
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-primary/20"
+                  className="input"
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-xs text-muted">
-                  Reddit Username
-                </label>
+                <label className="kicker mb-1.5 block">Reddit username</label>
                 <input
                   type="text"
                   value={redditUsername}
                   onChange={(e) => setRedditUsername(e.target.value)}
                   placeholder="u/username"
                   required
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-primary/20"
+                  className="input"
                 />
               </div>
 
-              {error ? (
-                <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400">
-                  {error}
-                </p>
-              ) : null}
-              {success ? (
-                <p className="rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2 text-xs text-green-400">
-                  {success}
-                </p>
-              ) : null}
+              {error ? <p className="alert-error">{error}</p> : null}
+              {success ? <p className="alert-ok">{success}</p> : null}
 
               <button
                 type="submit"
                 disabled={saving}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-medium transition hover:bg-primary/90 disabled:opacity-60 glow-primary"
+                className="btn btn-primary w-full"
               >
                 {saving ? (
-                  <Loader2 size={16} className="animate-spin" />
+                  <Loader2 size={15} className="animate-spin" />
                 ) : (
-                  <UserPlus size={15} />
+                  <UserPlus size={14} />
                 )}
-                {saving ? "Adding..." : "Add Employee"}
+                {saving ? "Adding" : "Add employee"}
               </button>
             </form>
-          </motion.section>
+          </section>
 
           {/* List */}
-          <motion.section
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="glass gradient-border rounded-2xl p-5"
-          >
-            <h2 className="mb-4 font-semibold">
-              Team Roster{" "}
+          <section className="card overflow-hidden">
+            <div className="flex items-baseline justify-between px-5 pb-1 pt-4">
+              <h2 className="text-[15px] font-medium">Roster</h2>
               {employees ? (
-                <span className="text-xs font-normal text-muted">
-                  ({employees.length})
+                <span className="text-[11px] text-faint">
+                  {employees.length}{" "}
+                  {employees.length === 1 ? "person" : "people"}
                 </span>
               ) : null}
-            </h2>
+            </div>
             {!employees ? (
               <div className="flex h-32 items-center justify-center">
-                <Loader2 size={24} className="animate-spin text-primary" />
+                <Loader2 size={22} className="animate-spin text-faint" />
               </div>
             ) : employees.length === 0 ? (
-              <p className="text-sm text-muted">
-                No employees yet. Add your first team member.
+              <p className="px-5 pb-5 pt-2 text-[13px] text-muted">
+                Empty for now. Share the app link with the team — they appear
+                here after their first sign-in.
               </p>
             ) : (
-              <ul className="divide-y divide-white/5">
+              <ul className="divide-y divide-edge px-5 pb-2">
                 {employees.map((e) => (
-                  <li key={e.id} className="flex items-center gap-3 py-3">
-                    <Avatar name={e.name} size={34} />
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm">{e.name}</p>
-                      <p className="text-[10px] text-secondary">
+                  <li key={e.id} className="flex items-center gap-3 py-2.5">
+                    <Avatar name={e.name} size={30} />
+                    <div className="min-w-0 flex-1 leading-tight">
+                      <p className="truncate text-[13px]">{e.name}</p>
+                      <p className="text-[10px] text-faint">
                         {e.reddit_username}
                       </p>
                     </div>
-                    <span className="text-[10px] text-muted">
-                      Added{" "}
+                    <span className="font-mono text-[10px] text-faint">
                       {new Date(e.added_at).toLocaleDateString("en-IN", {
-                        day: "numeric",
+                        day: "2-digit",
                         month: "short",
-                        year: "numeric",
                       })}
                     </span>
                   </li>
                 ))}
               </ul>
             )}
-          </motion.section>
+          </section>
         </div>
       </div>
     </AdminShell>
