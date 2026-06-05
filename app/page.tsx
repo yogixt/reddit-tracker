@@ -14,6 +14,14 @@ export default function Landing() {
       </header>
 
       <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center pb-24">
+        <Image
+          src="/logo.png"
+          alt="Tracker"
+          width={56}
+          height={56}
+          priority
+          className="mb-6"
+        />
         <p className="kicker mb-3 text-accent">Daily engagement log</p>
         <h1 className="max-w-md text-[28px] font-semibold leading-tight tracking-tight sm:text-[34px]">
           One report a day keeps the graphs alive.
@@ -65,7 +73,11 @@ export default function Landing() {
         </div>
       </div>
 
-      <footer className="mx-auto w-full max-w-2xl pb-6">
+      <footer className="mx-auto flex w-full max-w-2xl flex-wrap items-center justify-between gap-2 pb-6">
+        <p className="flex items-center gap-1.5 text-[11px] text-faint">
+          <Image src="/reddit.png" alt="Reddit" width={15} height={15} />
+          Tracks the team&apos;s engagement on Reddit.
+        </p>
         <p className="text-[11px] text-faint">
           Reports close at midnight IST. Missed days break the streak.
         </p>

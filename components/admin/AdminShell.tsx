@@ -123,6 +123,10 @@ export default function AdminShell({
             <LogOut size={15} />
           </button>
         </div>
+        <p className="mt-3 flex items-center gap-1.5 text-[10px] text-faint">
+          <Image src="/reddit.png" alt="" width={13} height={13} />
+          Reddit engagement tracker
+        </p>
       </div>
     </div>
   );
