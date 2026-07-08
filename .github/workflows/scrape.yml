@@ -1,0 +1,48 @@
+name: scrape-social-metrics
+
+# Runs the Playwright scraper worker that collects Quora + LinkedIn engagement
+# metrics and POSTs them to the app ingest endpoint.
+on:
+  schedule:
+    # 18:30 UTC == 00:00 IST (UTC+5:30), i.e. midnight India time, once daily.
+    # Captures the full previous day's activity right at the day boundary.
+    - cron: "30 18 * * *"
+  workflow_dispatch: {}
+
+# Avoid overlapping runs if a manual dispatch collides with the cron.
+concurrency:
+  group: scrape-social-metrics
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: scraper
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: scraper/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run scraper
+        env:
+          INGEST_URL: ${{ secrets.INGEST_URL }}
+          INGEST_TOKEN: ${{ secrets.INGEST_TOKEN }}
+          QUORA_STORAGE_STATE_B64: ${{ secrets.QUORA_STORAGE_STATE_B64 }}
+          LINKEDIN_STORAGE_STATE_B64: ${{ secrets.LINKEDIN_STORAGE_STATE_B64 }}
+          # Optional: override the default "quora,linkedin".
+          PLATFORMS: ${{ secrets.PLATFORMS }}
+        run: npm run scrape

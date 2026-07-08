@@ -17,15 +17,15 @@ import AdminShell from "@/components/admin/AdminShell";
 import type { Analytics } from "@/lib/types";
 
 const tooltipStyle = {
-  background: "#18181b",
-  border: "1px solid #2e2e34",
-  borderRadius: 8,
+  background: "#141418",
+  border: "1px solid rgba(255,255,255,0.16)",
+  borderRadius: 10,
   fontSize: 12,
-  color: "#f4f4f5",
+  color: "#f4f3f1",
 };
 
-const axisTick = { fill: "#5d5d66", fontSize: 10 };
-const gridStroke = "#1c1c1f";
+const axisTick = { fill: "#6b6b73", fontSize: 10 };
+const gridStroke = "rgba(255,255,255,0.06)";
 
 export default function AnalyticsPage() {
   const [data, setData] = useState<Analytics | null>(null);
@@ -46,8 +46,9 @@ export default function AnalyticsPage() {
       ) : (
         <div className="mx-auto max-w-5xl space-y-5">
           <div>
-            <h1 className="text-lg font-semibold tracking-tight">Analytics</h1>
-            <p className="text-xs text-faint">
+            <span className="tab-chip">Trends</span>
+            <h1 className="display mt-3 text-3xl">Analytics</h1>
+            <p className="mt-1 text-xs text-faint">
               Daily and weekly engagement trends.
             </p>
           </div>
@@ -63,8 +64,8 @@ export default function AnalyticsPage() {
                 <AreaChart data={data.daily}>
                   <defs>
                     <linearGradient id="gradReports" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#ff4500" stopOpacity={0.25} />
-                      <stop offset="100%" stopColor="#ff4500" stopOpacity={0} />
+                      <stop offset="0%" stopColor="#f2703a" stopOpacity={0.25} />
+                      <stop offset="100%" stopColor="#f2703a" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} vertical={false} />
@@ -72,7 +73,7 @@ export default function AnalyticsPage() {
                     dataKey="date"
                     tick={axisTick}
                     tickFormatter={(d: string) => d.slice(5)}
-                    stroke="#2e2e34"
+                    stroke="rgba(255,255,255,0.16)"
                     tickLine={false}
                   />
                   <YAxis
@@ -86,7 +87,7 @@ export default function AnalyticsPage() {
                   <Area
                     type="monotone"
                     dataKey="reports"
-                    stroke="#ff4500"
+                    stroke="#f2703a"
                     strokeWidth={1.75}
                     fill="url(#gradReports)"
                   />
@@ -108,7 +109,7 @@ export default function AnalyticsPage() {
                   <XAxis
                     dataKey="week"
                     tick={axisTick}
-                    stroke="#2e2e34"
+                    stroke="rgba(255,255,255,0.16)"
                     tickLine={false}
                   />
                   <YAxis
@@ -126,7 +127,7 @@ export default function AnalyticsPage() {
                     dataKey="avgLikes"
                     name="Avg likes"
                     stackId="a"
-                    fill="#ff4500"
+                    fill="#f2703a"
                   />
                   <Bar
                     dataKey="avgComments"

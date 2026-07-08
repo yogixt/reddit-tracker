@@ -30,7 +30,7 @@ function Column({
             <li key={e.name} className="flex items-center gap-3">
               <span
                 className={`w-6 shrink-0 font-mono text-[11px] tabular-nums ${
-                  i === 0 ? "text-accent" : i < 3 ? "text-white" : "text-faint"
+                  i === 0 ? "text-accent" : i < 3 ? "text-text" : "text-faint"
                 }`}
               >
                 {String(i + 1).padStart(2, "0")}
@@ -70,11 +70,10 @@ export default function LeaderboardPage() {
       ) : (
         <div className="mx-auto max-w-5xl space-y-5">
           <div>
-            <h1 className="text-lg font-semibold tracking-tight">
-              Leaderboard
-            </h1>
-            <p className="text-xs text-faint">
-              All-time rankings across the team.
+            <span className="tab-chip">All-time</span>
+            <h1 className="display mt-3 text-3xl">Leaderboard</h1>
+            <p className="mt-1 text-xs text-faint">
+              Rankings across the team, summed across all platforms.
             </p>
           </div>
           <div className="grid gap-4 lg:grid-cols-3">

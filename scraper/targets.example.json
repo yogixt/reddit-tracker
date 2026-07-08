@@ -1,0 +1,8 @@
+{
+  "targets": [
+    { "platform": "quora", "handle": "https://www.quora.com/profile/Example-Person" },
+    { "platform": "quora", "handle": "Another-Person" },
+    { "platform": "linkedin", "handle": "https://www.linkedin.com/in/example-person/" },
+    { "platform": "linkedin", "handle": "another-person" }
+  ]
+}

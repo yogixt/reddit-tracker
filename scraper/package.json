@@ -1,0 +1,18 @@
+{
+  "name": "reddit-tracker-scraper",
+  "version": "1.0.0",
+  "description": "Standalone Playwright scraper worker for the reddit-tracker dashboard. Scrapes Quora and LinkedIn bot-account activity and POSTs metrics to the app ingest endpoint.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "scrape": "node src/index.js",
+    "login:quora": "node src/login.js quora",
+    "login:linkedin": "node src/login.js linkedin"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "playwright": "^1.47.0"
+  }
+}

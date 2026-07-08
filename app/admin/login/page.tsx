@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { Loader2, ArrowLeft } from "lucide-react";
 import { setAdminSession } from "@/lib/session";
 
@@ -42,14 +41,16 @@ export default function AdminLogin() {
     <main className="flex flex-1 items-center justify-center px-5 py-10">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex items-center gap-2.5">
-          <Image src="/logo.png" alt="" width={24} height={24} priority />
+          <span className="h-2.5 w-2.5 rounded-full bg-accent" />
           <span className="text-[13px] font-semibold">Tracker</span>
         </div>
 
-        <p className="kicker mb-2">Admin</p>
-        <h1 className="text-xl font-semibold tracking-tight">Sign in</h1>
-        <p className="mt-1.5 text-[13px] text-muted">
-          Team dashboard and reports.
+        <span className="tab-chip mb-5">Admin</span>
+        <h1 className="display text-4xl">
+          Sign <span className="accent-word">in</span>.
+        </h1>
+        <p className="mt-2 text-[13px] text-muted">
+          Team dashboard, proof wall and reports.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-7 space-y-4">

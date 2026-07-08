@@ -2,19 +2,20 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Trophy,
   BarChart3,
   Users,
+  Bell,
   LogOut,
   Menu,
   X,
   Loader2,
 } from "lucide-react";
 import Avatar from "@/components/Avatar";
+import NotificationBell from "@/components/admin/NotificationBell";
 import {
   clearAdminSession,
   getAdminSession,
@@ -26,6 +27,7 @@ const NAV = [
   { href: "/admin/leaderboard", label: "Leaderboard", icon: Trophy },
   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/admin/employees", label: "Employees", icon: Users },
+  { href: "/admin/notifications", label: "Alerts", icon: Bell },
 ];
 
 export default function AdminShell({
@@ -72,7 +74,7 @@ export default function AdminShell({
   const sidebar = (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2.5 px-4 pb-4 pt-5">
-        <Image src="/logo.png" alt="" width={24} height={24} />
+        <span className="h-2.5 w-2.5 rounded-full bg-accent" />
         <div className="leading-tight">
           <p className="text-[13px] font-semibold">Tracker</p>
           <p className="text-[10px] text-faint">internal</p>
@@ -123,9 +125,8 @@ export default function AdminShell({
             <LogOut size={15} />
           </button>
         </div>
-        <p className="mt-3 flex items-center gap-1.5 text-[10px] text-faint">
-          <Image src="/reddit.png" alt="" width={13} height={13} />
-          Reddit engagement tracker
+        <p className="mt-3 text-[10px] text-faint">
+          Reddit · Quora · LinkedIn tracker
         </p>
       </div>
     </div>
@@ -168,6 +169,7 @@ export default function AdminShell({
           </button>
           <p className="text-xs text-faint">{today}</p>
           <div className="flex-1" />
+          <NotificationBell />
           <span className="flex items-center gap-1.5 text-[11px] text-muted">
             <span className="dot bg-ok" />
             live

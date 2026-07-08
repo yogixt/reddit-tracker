@@ -3,13 +3,9 @@ import { getDb } from "@/lib/db";
 export async function POST(request: Request) {
   const body = await request.json();
   const name = String(body.name ?? "").trim();
-  const redditUsername = String(body.redditUsername ?? "").trim();
 
-  if (!name || !redditUsername) {
-    return Response.json(
-      { error: "Name and Reddit username are required" },
-      { status: 400 }
-    );
+  if (!name) {
+    return Response.json({ error: "Name is required" }, { status: 400 });
   }
 
   const db = await getDb();
@@ -24,23 +20,19 @@ export async function POST(request: Request) {
       ok: true,
       created: false,
       name: String(row.name),
-      redditUsername: String(row.reddit_username),
+      redditUsername: String(row.reddit_username ?? ""),
     });
   }
 
-  // First login: register the employee automatically
-  const normalized = redditUsername.startsWith("u/")
-    ? redditUsername
-    : `u/${redditUsername}`;
+  // First login: register the employee. Platform handles are added later by
+  // an admin on the Employees page (or the person can still log manually).
+  // Insert explicit empty handles — on DBs migrated from the old schema the
+  // handle columns are NOT NULL without a default.
   await db.execute({
-    sql: "INSERT INTO employees (name, reddit_username, added_at) VALUES (?, ?, ?)",
-    args: [name, normalized, new Date().toISOString()],
+    sql: `INSERT INTO employees (name, reddit_username, quora_username, linkedin_url, added_at)
+          VALUES (?, '', '', '', ?)`,
+    args: [name, new Date().toISOString()],
   });
 
-  return Response.json({
-    ok: true,
-    created: true,
-    name,
-    redditUsername: normalized,
-  });
+  return Response.json({ ok: true, created: true, name, redditUsername: "" });
 }

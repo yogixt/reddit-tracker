@@ -2,7 +2,7 @@
 
 export interface EmployeeSession {
   name: string;
-  redditUsername: string;
+  redditUsername?: string;
 }
 
 export interface AdminSession {
