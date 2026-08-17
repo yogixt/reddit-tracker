@@ -2,6 +2,12 @@
 
 Mobile-first internal dashboard to track daily Reddit engagement activities of employees. Branded simply as "Tracker" — it is an internal tool, not a Reddit product. Employees log their activity in under 30 seconds; admins get KPIs, a team heatmap, leaderboards, and analytics.
 
+**Live:** [reddit-tracker-beta.vercel.app](https://reddit-tracker-beta.vercel.app)
+
+![Tracker landing page](docs/screenshot.png)
+
+> Note: `reddit-tracker.vercel.app` (no `-beta`) is an unrelated third-party site — always use the link above.
+
 ## Tech Stack
 
 | Layer | Technology |
